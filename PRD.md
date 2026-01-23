@@ -61,6 +61,13 @@ This is a comprehensive service management system with multiple interconnected f
 - **Progression**: Click Samples → Sample data generates → Toast notification confirms success → Jobs and documents appear in lists
 - **Success criteria**: 6 realistic jobs added with 15+ attachments (photos and PDFs), 5 technical manual PDFs, all searchable and fully interactive
 
+### Job Templates
+- **Functionality**: Pre-configured job templates for common service scenarios (15 templates covering hydraulic leaks, motor overheating, sensor faults, belt replacements, PLC errors, bearing failures, pneumatic leaks, valve issues, power supply failures, limit switches, software updates, preventive maintenance, emergency stop issues, encoder failures, and filter replacements)
+- **Purpose**: Dramatically speeds up data entry by providing pre-filled job information based on common service patterns, reducing repetitive typing and ensuring consistent documentation
+- **Trigger**: User clicks "Use Template" button when creating a new job
+- **Progression**: Click Use Template → Template picker modal opens → Filter by category (Hydraulic/Electrical/Mechanical/Pneumatic/Control/Maintenance) or search → Click template → Form auto-fills with title, error code, symptoms, and fix → User adds customer details → Submit
+- **Success criteria**: 15 templates available covering major service categories, templates pre-fill all technical fields correctly, customer-specific fields remain empty for user input, toast notification confirms template application
+
 ## Edge Case Handling
 
 - **Large File Uploads**: Show progress indicator, validate file size limits (10MB max), display clear error if too large
@@ -71,6 +78,7 @@ This is a comprehensive service management system with multiple interconnected f
 - **Missing Required Fields**: Inline validation prevents submission, highlight missing fields in red
 - **Concurrent Edits**: Last write wins (acceptable for single-user offline app), show timestamp of last update
 - **Storage Quota**: Monitor KV storage usage, warn user when approaching limits, provide data export option
+- **Template Customization**: Users can edit all template-filled fields before submission, templates only appear on new job creation (not when editing existing jobs), templates preserve manual changes if user switches between templates
 
 ## Design Direction
 

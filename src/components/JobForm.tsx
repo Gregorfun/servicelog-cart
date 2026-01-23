@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { Job, JobStatus } from '@/lib/types'
 import { generateId } from '@/lib/helpers'
+import { JobTemplate } from '@/lib/job-templates'
+import { JobTemplatePicker } from '@/components/JobTemplatePicker'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card } from '@/components/ui/card'
-import { Plus, FloppyDisk } from '@phosphor-icons/react'
+import { Plus, FloppyDisk, Files } from '@phosphor-icons/react'
+import { toast } from 'sonner'
 
 interface JobFormProps {
   onSubmit: (job: Job) => void
@@ -16,6 +19,7 @@ interface JobFormProps {
 }
 
 export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job' }: JobFormProps) {
+  const [showTemplatePicker, setShowTemplatePicker] = useState(false)
   const [formData, setFormData] = useState<Partial<Job>>(
     initialData || {
       title: '',
@@ -29,6 +33,16 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job' }: J
       status: 'open'
     }
   )
+
+  const handleTemplateSelect = (template: JobTemplate) => {
+    setFormData(prev => ({
+      ...prev,
+      ...template.data
+    }))
+    toast.success('Template applied!', {
+      description: `${template.name} template loaded. Fill in customer details.`
+    })
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -71,18 +85,33 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job' }: J
   }
 
   return (
-    <Card className="p-6">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="title">Job Title *</Label>
-          <Input
-            id="title"
-            value={formData.title || ''}
-            onChange={(e) => updateField('title', e.target.value)}
-            placeholder="e.g., Repair hydraulic pump"
-            required
-          />
-        </div>
+    <>
+      <Card className="p-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {!initialData && (
+            <div className="flex gap-2 pb-4 border-b border-border">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowTemplatePicker(true)}
+                className="gap-2 flex-1"
+              >
+                <Files className="w-4 h-4" />
+                Use Template
+              </Button>
+            </div>
+          )}
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="title">Job Title *</Label>
+            <Input
+              id="title"
+              value={formData.title || ''}
+              onChange={(e) => updateField('title', e.target.value)}
+              placeholder="e.g., Repair hydraulic pump"
+              required
+            />
+          </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
@@ -187,5 +216,13 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job' }: J
         </Button>
       </form>
     </Card>
+
+    {showTemplatePicker && (
+      <JobTemplatePicker
+        onSelect={handleTemplateSelect}
+        onClose={() => setShowTemplatePicker(false)}
+      />
+    )}
+    </>
   )
 }
