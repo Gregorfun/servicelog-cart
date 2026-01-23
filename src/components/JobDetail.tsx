@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Job, Attachment } from '@/lib/types'
+import { JobTemplate } from '@/lib/job-templates'
 import { JobForm } from './JobForm'
+import { SaveJobAsTemplate } from './SaveJobAsTemplate'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { StatusBadge } from './StatusBadge'
 import { formatDate, fileToBase64, downloadFile, generateId } from '@/lib/helpers'
-import { Trash, Paperclip, Upload, Download, X } from '@phosphor-icons/react'
+import { Trash, Paperclip, Upload, Download, X, FloppyDisk } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import {
   AlertDialog,
@@ -26,6 +28,7 @@ interface JobDetailProps {
   onDelete: (jobId: string) => void
   onAddAttachment: (attachment: Attachment) => void
   onDeleteAttachment: (attachmentId: string) => void
+  onSaveAsTemplate: (template: JobTemplate) => void
   onClose: () => void
 }
 
@@ -36,10 +39,12 @@ export function JobDetail({
   onDelete, 
   onAddAttachment, 
   onDeleteAttachment,
+  onSaveAsTemplate,
   onClose 
 }: JobDetailProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
 
   const handleUpdate = (updatedJob: Job) => {
@@ -155,11 +160,19 @@ export function JobDetail({
               <p className="mt-1 whitespace-pre-wrap">{job.fix || '-'}</p>
             </div>
 
-            <div className="flex gap-2 pt-4">
+            <div className="flex flex-wrap gap-2 pt-4">
               <Button onClick={() => setIsEditing(true)} variant="default">
                 Edit Job
               </Button>
-              <Button onClick={() => setShowDeleteDialog(true)} variant="destructive">
+              <Button 
+                onClick={() => setShowSaveTemplateDialog(true)} 
+                variant="outline"
+                className="gap-2"
+              >
+                <FloppyDisk className="w-4 h-4" />
+                Save as Template
+              </Button>
+              <Button onClick={() => setShowDeleteDialog(true)} variant="destructive" className="gap-2">
                 <Trash className="w-4 h-4" />
                 Delete
               </Button>
@@ -251,6 +264,16 @@ export function JobDetail({
           )}
         </div>
       </Card>
+
+      <SaveJobAsTemplate
+        job={job}
+        open={showSaveTemplateDialog}
+        onClose={() => setShowSaveTemplateDialog(false)}
+        onSave={(template) => {
+          onSaveAsTemplate(template)
+          toast.success('Template saved successfully')
+        }}
+      />
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>

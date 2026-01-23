@@ -16,9 +16,11 @@ interface JobFormProps {
   onSubmit: (job: Job) => void
   initialData?: Job
   submitLabel?: string
+  customTemplates?: JobTemplate[]
+  onDeleteCustomTemplate?: (templateId: string) => void
 }
 
-export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job' }: JobFormProps) {
+export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', customTemplates = [], onDeleteCustomTemplate }: JobFormProps) {
   const [showTemplatePicker, setShowTemplatePicker] = useState(false)
   const [formData, setFormData] = useState<Partial<Job>>(
     initialData || {
@@ -221,6 +223,8 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job' }: J
       <JobTemplatePicker
         onSelect={handleTemplateSelect}
         onClose={() => setShowTemplatePicker(false)}
+        customTemplates={customTemplates}
+        onDeleteCustomTemplate={onDeleteCustomTemplate}
       />
     )}
     </>

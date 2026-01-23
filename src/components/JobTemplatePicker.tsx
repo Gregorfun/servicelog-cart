@@ -21,7 +21,9 @@ import {
   Barcode,
   Funnel,
   MagnifyingGlass,
-  X
+  X,
+  Star,
+  Trash
 } from '@phosphor-icons/react'
 
 const ICON_MAP: Record<string, React.ElementType> = {
@@ -39,19 +41,24 @@ const ICON_MAP: Record<string, React.ElementType> = {
   Wrench,
   Warning,
   Barcode,
-  Funnel
+  Funnel,
+  Star
 }
 
 interface JobTemplatePickerProps {
   onSelect: (template: JobTemplate) => void
   onClose: () => void
+  customTemplates?: JobTemplate[]
+  onDeleteCustomTemplate?: (templateId: string) => void
 }
 
-export function JobTemplatePicker({ onSelect, onClose }: JobTemplatePickerProps) {
+export function JobTemplatePicker({ onSelect, onClose, customTemplates = [], onDeleteCustomTemplate }: JobTemplatePickerProps) {
   const [selectedCategory, setSelectedCategory] = useState<TemplateCategory>('All')
   const [searchQuery, setSearchQuery] = useState('')
 
-  const filteredTemplates = JOB_TEMPLATES.filter(template => {
+  const allTemplates = [...customTemplates, ...JOB_TEMPLATES]
+
+  const filteredTemplates = allTemplates.filter(template => {
     const matchesCategory = selectedCategory === 'All' || template.category === selectedCategory
     const matchesSearch = searchQuery === '' || 
       template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -63,6 +70,13 @@ export function JobTemplatePicker({ onSelect, onClose }: JobTemplatePickerProps)
   const handleSelectTemplate = (template: JobTemplate) => {
     onSelect(template)
     onClose()
+  }
+
+  const handleDeleteTemplate = (e: React.MouseEvent, templateId: string) => {
+    e.stopPropagation()
+    if (onDeleteCustomTemplate) {
+      onDeleteCustomTemplate(templateId)
+    }
   }
 
   return (
@@ -117,7 +131,7 @@ export function JobTemplatePicker({ onSelect, onClose }: JobTemplatePickerProps)
                 return (
                   <Card
                     key={template.id}
-                    className="p-4 hover:border-accent hover:bg-card/50 cursor-pointer transition-all"
+                    className="p-4 hover:border-accent hover:bg-card/50 cursor-pointer transition-all group"
                     onClick={() => handleSelectTemplate(template)}
                   >
                     <div className="flex items-start gap-3">
@@ -129,9 +143,21 @@ export function JobTemplatePicker({ onSelect, onClose }: JobTemplatePickerProps)
                           <h3 className="font-semibold text-sm leading-tight">
                             {template.name}
                           </h3>
-                          <Badge variant="secondary" className="text-xs shrink-0">
-                            {template.category}
-                          </Badge>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <Badge variant="secondary" className="text-xs">
+                              {template.category}
+                            </Badge>
+                            {template.isCustom && onDeleteCustomTemplate && (
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                                onClick={(e) => handleDeleteTemplate(e, template.id)}
+                              >
+                                <Trash className="w-3 h-3" />
+                              </Button>
+                            )}
+                          </div>
                         </div>
                         <p className="text-xs text-muted-foreground leading-relaxed">
                           {template.description}

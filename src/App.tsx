@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Job, Attachment, Document } from '@/lib/types'
+import { JobTemplate } from '@/lib/job-templates'
 import { performSearch, filterJobs, JobFilterOptions, sortJobs, SortOption } from '@/lib/helpers'
 import { createSampleJobs, createSampleAttachments, createSampleDocuments } from '@/lib/sample-data'
 import { JobForm } from '@/components/JobForm'
@@ -27,6 +28,7 @@ function App() {
   const [jobs = [], setJobs] = useKV<Job[]>('servicelog-jobs', [])
   const [attachments = [], setAttachments] = useKV<Attachment[]>('servicelog-attachments', [])
   const [documents = [], setDocuments] = useKV<Document[]>('servicelog-documents', [])
+  const [customTemplates = [], setCustomTemplates] = useKV<JobTemplate[]>('servicelog-custom-templates', [])
   
   const [currentView, setCurrentView] = useState<View>('dashboard')
   const [selectedJob, setSelectedJob] = useState<Job | null>(null)
@@ -149,6 +151,17 @@ function App() {
     })
   }
 
+  const handleSaveAsTemplate = (template: JobTemplate) => {
+    setCustomTemplates((currentTemplates = []) => [...currentTemplates, template])
+  }
+
+  const handleDeleteCustomTemplate = (templateId: string) => {
+    setCustomTemplates((currentTemplates = []) =>
+      currentTemplates.filter((t) => t.id !== templateId)
+    )
+    toast.success('Template deleted')
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -248,7 +261,11 @@ function App() {
                 <div className="flex flex-col gap-6">
                   <div>
                     <h2 className="text-xl font-bold mb-4">Create New Job</h2>
-                    <JobForm onSubmit={handleCreateJob} />
+                    <JobForm 
+                      onSubmit={handleCreateJob}
+                      customTemplates={customTemplates}
+                      onDeleteCustomTemplate={handleDeleteCustomTemplate}
+                    />
                   </div>
                   
                   {jobs.length === 0 && (
@@ -309,6 +326,7 @@ function App() {
                         onDelete={handleDeleteJob}
                         onAddAttachment={handleAddAttachment}
                         onDeleteAttachment={handleDeleteAttachment}
+                        onSaveAsTemplate={handleSaveAsTemplate}
                         onClose={() => setSelectedJob(null)}
                       />
                     </div>

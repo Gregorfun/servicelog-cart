@@ -7,6 +7,8 @@ export interface JobTemplate {
   category: string
   icon: string
   data: Partial<Omit<Job, 'id' | 'createdAt' | 'updatedAt'>>
+  isCustom?: boolean
+  createdAt?: string
 }
 
 export const JOB_TEMPLATES: JobTemplate[] = [
@@ -229,7 +231,36 @@ export const TEMPLATE_CATEGORIES = [
   'Mechanical',
   'Pneumatic',
   'Control',
-  'Maintenance'
+  'Maintenance',
+  'Custom'
 ] as const
 
 export type TemplateCategory = typeof TEMPLATE_CATEGORIES[number]
+
+export function createTemplateFromJob(
+  job: Job,
+  name: string,
+  description: string,
+  category: string = 'Custom'
+): JobTemplate {
+  return {
+    id: `custom-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    name,
+    description,
+    category,
+    icon: 'Star',
+    isCustom: true,
+    createdAt: new Date().toISOString(),
+    data: {
+      title: job.title,
+      customer: '',
+      location: '',
+      machineModel: job.machineModel,
+      serialNo: '',
+      errorCode: job.errorCode,
+      symptoms: job.symptoms,
+      fix: job.fix,
+      status: 'open'
+    }
+  }
+}
