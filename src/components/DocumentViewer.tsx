@@ -1,9 +1,12 @@
 import { Document } from '@/lib/types'
+import { useLanguage } from '@/hooks/use-language'
+import { generateDocumentPDF } from '@/lib/pdf-export'
+import { formatDate } from '@/lib/helpers'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { formatDate } from '@/lib/helpers'
-import { X, FilePdf } from '@phosphor-icons/react'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { FilePdf, X, Printer } from '@phosphor-icons/react'
+import { toast } from 'sonner'
 
 interface DocumentViewerProps {
   document: Document
@@ -11,6 +14,13 @@ interface DocumentViewerProps {
 }
 
 export function DocumentViewer({ document, onClose }: DocumentViewerProps) {
+  const { t } = useLanguage()
+  
+  const handleExportPDF = () => {
+    generateDocumentPDF(document, t)
+    toast.success(t.export.exportSuccess)
+  }
+
   return (
     <Card className="p-6 flex flex-col h-full max-h-[80vh]">
       <div className="flex items-start justify-between gap-4 mb-4">
@@ -28,9 +38,20 @@ export function DocumentViewer({ document, onClose }: DocumentViewerProps) {
             </p>
           </div>
         </div>
-        <Button variant="ghost" size="icon" onClick={onClose}>
-          <X className="w-5 h-5" />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleExportPDF}
+            className="gap-2"
+          >
+            <Printer className="w-4 h-4" />
+            Print PDF
+          </Button>
+          <Button variant="ghost" size="icon" onClick={onClose}>
+            <X className="w-5 h-5" />
+          </Button>
+        </div>
       </div>
 
       <div className="border-t border-border pt-4 flex-1 overflow-hidden">

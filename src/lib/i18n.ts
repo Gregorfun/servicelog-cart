@@ -218,6 +218,26 @@ export interface Translations {
     includeAttachments: string
     noDataToExport: string
   }
+  import: {
+    importData: string
+    importJobs: string
+    importDocuments: string
+    importAll: string
+    importSuccess: string
+    importFailed: string
+    importing: string
+    importDescription: string
+    selectFile: string
+    chooseFile: string
+    previewTitle: string
+    importWarning: string
+    supportedFormats: string
+    jsonExported: string
+    fullBackup: string
+    invalidFileType: string
+    invalidFormat: string
+    importSuccessDescription: string
+  }
 }
 
 export const translations: Record<Language, Translations> = {
@@ -438,6 +458,26 @@ export const translations: Record<Language, Translations> = {
       selectFormat: 'Select export format',
       includeAttachments: 'Include attachments',
       noDataToExport: 'No data to export'
+    },
+    import: {
+      importData: 'Import Data',
+      importJobs: 'Import Jobs',
+      importDocuments: 'Import Documents',
+      importAll: 'Import All',
+      importSuccess: 'Data imported successfully',
+      importFailed: 'Import failed',
+      importing: 'Importing...',
+      importDescription: 'Restore previously exported data',
+      selectFile: 'Select File',
+      chooseFile: 'Choose JSON file',
+      previewTitle: 'Import Preview',
+      importWarning: 'Imported data will be added to existing data',
+      supportedFormats: 'Supported formats:',
+      jsonExported: 'JSON files exported from ServiceLog',
+      fullBackup: 'Full backup files',
+      invalidFileType: 'Please select a JSON file',
+      invalidFormat: 'Invalid file format',
+      importSuccessDescription: 'Imported {jobs} jobs and {documents} documents'
     }
   },
   de: {
@@ -657,6 +697,26 @@ export const translations: Record<Language, Translations> = {
       selectFormat: 'Exportformat wählen',
       includeAttachments: 'Anhänge einbeziehen',
       noDataToExport: 'Keine Daten zum Exportieren'
+    },
+    import: {
+      importData: 'Daten Importieren',
+      importJobs: 'Aufträge Importieren',
+      importDocuments: 'Dokumente Importieren',
+      importAll: 'Alles Importieren',
+      importSuccess: 'Daten erfolgreich importiert',
+      importFailed: 'Import fehlgeschlagen',
+      importing: 'Importiere...',
+      importDescription: 'Zuvor exportierte Daten wiederherstellen',
+      selectFile: 'Datei auswählen',
+      chooseFile: 'JSON-Datei wählen',
+      previewTitle: 'Importvorschau',
+      importWarning: 'Importierte Daten werden zu vorhandenen Daten hinzugefügt',
+      supportedFormats: 'Unterstützte Formate:',
+      jsonExported: 'Aus ServiceLog exportierte JSON-Dateien',
+      fullBackup: 'Vollständige Backup-Dateien',
+      invalidFileType: 'Bitte wählen Sie eine JSON-Datei',
+      invalidFormat: 'Ungültiges Dateiformat',
+      importSuccessDescription: '{jobs} Aufträge und {documents} Dokumente importiert'
     }
   },
   fr: {
@@ -876,6 +936,26 @@ export const translations: Record<Language, Translations> = {
       selectFormat: 'Sélectionner le format d\'export',
       includeAttachments: 'Inclure les pièces jointes',
       noDataToExport: 'Aucune donnée à exporter'
+    },
+    import: {
+      importData: 'Importer des Données',
+      importJobs: 'Importer des Travaux',
+      importDocuments: 'Importer des Documents',
+      importAll: 'Tout Importer',
+      importSuccess: 'Données importées avec succès',
+      importFailed: 'Échec de l\'importation',
+      importing: 'Importation...',
+      importDescription: 'Restaurer les données précédemment exportées',
+      selectFile: 'Sélectionner un Fichier',
+      chooseFile: 'Choisir un fichier JSON',
+      previewTitle: 'Aperçu de l\'importation',
+      importWarning: 'Les données importées seront ajoutées aux données existantes',
+      supportedFormats: 'Formats supportés:',
+      jsonExported: 'Fichiers JSON exportés depuis ServiceLog',
+      fullBackup: 'Fichiers de sauvegarde complète',
+      invalidFileType: 'Veuillez sélectionner un fichier JSON',
+      invalidFormat: 'Format de fichier invalide',
+      importSuccessDescription: '{jobs} interventions et {documents} documents importés'
     }
   },
   es: {
@@ -1095,6 +1175,26 @@ export const translations: Record<Language, Translations> = {
       selectFormat: 'Seleccionar formato de exportación',
       includeAttachments: 'Incluir archivos adjuntos',
       noDataToExport: 'No hay datos para exportar'
+    },
+    import: {
+      importData: 'Importar Datos',
+      importJobs: 'Importar Trabajos',
+      importDocuments: 'Importar Documentos',
+      importAll: 'Importar Todo',
+      importSuccess: 'Datos importados exitosamente',
+      importFailed: 'Error en la importación',
+      importing: 'Importando...',
+      importDescription: 'Restaurar datos exportados previamente',
+      selectFile: 'Seleccionar Archivo',
+      chooseFile: 'Elegir archivo JSON',
+      previewTitle: 'Vista Previa de Importación',
+      importWarning: 'Los datos importados se agregarán a los datos existentes',
+      supportedFormats: 'Formatos compatibles:',
+      jsonExported: 'Archivos JSON exportados desde ServiceLog',
+      fullBackup: 'Archivos de respaldo completos',
+      invalidFileType: 'Por favor seleccione un archivo JSON',
+      invalidFormat: 'Formato de archivo inválido',
+      importSuccessDescription: '{jobs} trabajos y {documents} documentos importados'
     }
   },
   it: {
@@ -1314,6 +1414,26 @@ export const translations: Record<Language, Translations> = {
       selectFormat: 'Seleziona formato di esportazione',
       includeAttachments: 'Includi allegati',
       noDataToExport: 'Nessun dato da esportare'
+    },
+    import: {
+      importData: 'Importa Dati',
+      importJobs: 'Importa Lavori',
+      importDocuments: 'Importa Documenti',
+      importAll: 'Importa Tutto',
+      importSuccess: 'Dati importati con successo',
+      importFailed: 'Importazione fallita',
+      importing: 'Importazione...',
+      importDescription: 'Ripristina dati precedentemente esportati',
+      selectFile: 'Seleziona File',
+      chooseFile: 'Scegli file JSON',
+      previewTitle: 'Anteprima Importazione',
+      importWarning: 'I dati importati saranno aggiunti ai dati esistenti',
+      supportedFormats: 'Formati supportati:',
+      jsonExported: 'File JSON esportati da ServiceLog',
+      fullBackup: 'File di backup completi',
+      invalidFileType: 'Seleziona un file JSON',
+      invalidFormat: 'Formato file non valido',
+      importSuccessDescription: '{jobs} lavori e {documents} documenti importati'
     }
   }
 }

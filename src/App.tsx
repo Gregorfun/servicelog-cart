@@ -18,12 +18,13 @@ import { JobFilters } from '@/components/JobFilters'
 import { JobSorting } from '@/components/JobSorting'
 import { LanguageSelector } from '@/components/LanguageSelector'
 import { ExportDialog } from '@/components/ExportDialog'
+import { ImportDialog } from '@/components/ImportDialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Toaster } from '@/components/ui/sonner'
 import { toast } from 'sonner'
-import { Briefcase, FilePdf, MagnifyingGlass, Database, Funnel, Download } from '@phosphor-icons/react'
+import { Briefcase, FilePdf, MagnifyingGlass, Database, Funnel, Download, Upload } from '@phosphor-icons/react'
 
 type View = 'dashboard' | 'upload' | 'search' | 'documents' | 'advanced-search'
 
@@ -40,6 +41,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeSearchQuery, setActiveSearchQuery] = useState('')
   const [exportDialogOpen, setExportDialogOpen] = useState(false)
+  const [importDialogOpen, setImportDialogOpen] = useState(false)
   const [jobFilters, setJobFilters] = useState<JobFilterOptions>({
     statuses: [],
     dateFrom: '',
@@ -167,6 +169,12 @@ function App() {
     toast.success(t.templates.templateDeleted)
   }
 
+  const handleImport = (result: { jobs: Job[], documents: Document[], attachments: Attachment[] }) => {
+    setJobs((currentJobs = []) => [...currentJobs, ...result.jobs])
+    setDocuments((currentDocs = []) => [...currentDocs, ...result.documents])
+    setAttachments((currentAttachments = []) => [...currentAttachments, ...result.attachments])
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -197,6 +205,15 @@ function App() {
 
             <div className="flex items-center gap-2">
               <LanguageSelector />
+              <Button
+                variant="outline"
+                onClick={() => setImportDialogOpen(true)}
+                className="gap-2"
+                title={t.import.importData}
+              >
+                <Upload className="w-4 h-4" weight="fill" />
+                <span className="hidden lg:inline">{t.common.import}</span>
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => setExportDialogOpen(true)}
@@ -423,6 +440,12 @@ function App() {
         jobs={jobs}
         documents={documents}
         attachments={attachments}
+      />
+
+      <ImportDialog
+        open={importDialogOpen}
+        onOpenChange={setImportDialogOpen}
+        onImport={handleImport}
       />
 
       <Toaster position="bottom-right" />

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Job, Attachment } from '@/lib/types'
 import { JobTemplate } from '@/lib/job-templates'
+import { useLanguage } from '@/hooks/use-language'
+import { generateJobPDF } from '@/lib/pdf-export'
 import { JobForm } from './JobForm'
 import { SaveJobAsTemplate } from './SaveJobAsTemplate'
 import { Card } from '@/components/ui/card'
@@ -8,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { StatusBadge } from './StatusBadge'
 import { formatDate, fileToBase64, downloadFile, generateId } from '@/lib/helpers'
-import { Trash, Paperclip, Upload, Download, X, FloppyDisk } from '@phosphor-icons/react'
+import { Trash, Paperclip, Upload, Download, X, FloppyDisk, FilePdf } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import {
   AlertDialog,
@@ -42,6 +44,7 @@ export function JobDetail({
   onSaveAsTemplate,
   onClose 
 }: JobDetailProps) {
+  const { t } = useLanguage()
   const [isEditing, setIsEditing] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false)
@@ -97,6 +100,11 @@ export function JobDetail({
 
   const handleDownload = (attachment: Attachment) => {
     downloadFile(attachment.data, attachment.filename, attachment.mimeType)
+  }
+
+  const handleExportPDF = () => {
+    generateJobPDF(job, jobAttachments, t)
+    toast.success(t.export.exportSuccess)
   }
 
   const jobAttachments = attachments.filter(a => a.jobId === job.id)
@@ -163,6 +171,14 @@ export function JobDetail({
             <div className="flex flex-wrap gap-2 pt-4">
               <Button onClick={() => setIsEditing(true)} variant="default">
                 Edit Job
+              </Button>
+              <Button 
+                onClick={handleExportPDF} 
+                variant="outline"
+                className="gap-2"
+              >
+                <FilePdf className="w-4 h-4" weight="fill" />
+                Export PDF
               </Button>
               <Button 
                 onClick={() => setShowSaveTemplateDialog(true)} 
