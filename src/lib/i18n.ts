@@ -205,6 +205,19 @@ export interface Translations {
     italian: string
     changeLanguage: string
   }
+  export: {
+    exportData: string
+    exportJobs: string
+    exportDocuments: string
+    exportAll: string
+    exportFormat: string
+    exportSuccess: string
+    exportFailed: string
+    exportingData: string
+    selectFormat: string
+    includeAttachments: string
+    noDataToExport: string
+  }
 }
 
 export const translations: Record<Language, Translations> = {
@@ -412,6 +425,19 @@ export const translations: Record<Language, Translations> = {
       spanish: 'Spanish',
       italian: 'Italian',
       changeLanguage: 'Change Language'
+    },
+    export: {
+      exportData: 'Export Data',
+      exportJobs: 'Export Jobs',
+      exportDocuments: 'Export Documents',
+      exportAll: 'Export All',
+      exportFormat: 'Export Format',
+      exportSuccess: 'Data exported successfully',
+      exportFailed: 'Export failed',
+      exportingData: 'Exporting data...',
+      selectFormat: 'Select export format',
+      includeAttachments: 'Include attachments',
+      noDataToExport: 'No data to export'
     }
   },
   de: {
@@ -618,6 +644,19 @@ export const translations: Record<Language, Translations> = {
       spanish: 'Spanisch',
       italian: 'Italienisch',
       changeLanguage: 'Sprache Ändern'
+    },
+    export: {
+      exportData: 'Daten Exportieren',
+      exportJobs: 'Aufträge Exportieren',
+      exportDocuments: 'Dokumente Exportieren',
+      exportAll: 'Alles Exportieren',
+      exportFormat: 'Exportformat',
+      exportSuccess: 'Daten erfolgreich exportiert',
+      exportFailed: 'Export fehlgeschlagen',
+      exportingData: 'Exportiere Daten...',
+      selectFormat: 'Exportformat wählen',
+      includeAttachments: 'Anhänge einbeziehen',
+      noDataToExport: 'Keine Daten zum Exportieren'
     }
   },
   fr: {
@@ -824,6 +863,19 @@ export const translations: Record<Language, Translations> = {
       spanish: 'Espagnol',
       italian: 'Italien',
       changeLanguage: 'Changer de Langue'
+    },
+    export: {
+      exportData: 'Exporter les Données',
+      exportJobs: 'Exporter les Interventions',
+      exportDocuments: 'Exporter les Documents',
+      exportAll: 'Tout Exporter',
+      exportFormat: 'Format d\'Export',
+      exportSuccess: 'Données exportées avec succès',
+      exportFailed: 'Échec de l\'export',
+      exportingData: 'Export en cours...',
+      selectFormat: 'Sélectionner le format d\'export',
+      includeAttachments: 'Inclure les pièces jointes',
+      noDataToExport: 'Aucune donnée à exporter'
     }
   },
   es: {
@@ -1030,6 +1082,19 @@ export const translations: Record<Language, Translations> = {
       spanish: 'Español',
       italian: 'Italiano',
       changeLanguage: 'Cambiar Idioma'
+    },
+    export: {
+      exportData: 'Exportar Datos',
+      exportJobs: 'Exportar Trabajos',
+      exportDocuments: 'Exportar Documentos',
+      exportAll: 'Exportar Todo',
+      exportFormat: 'Formato de Exportación',
+      exportSuccess: 'Datos exportados exitosamente',
+      exportFailed: 'Error en la exportación',
+      exportingData: 'Exportando datos...',
+      selectFormat: 'Seleccionar formato de exportación',
+      includeAttachments: 'Incluir archivos adjuntos',
+      noDataToExport: 'No hay datos para exportar'
     }
   },
   it: {
@@ -1236,6 +1301,19 @@ export const translations: Record<Language, Translations> = {
       spanish: 'Spagnolo',
       italian: 'Italiano',
       changeLanguage: 'Cambia Lingua'
+    },
+    export: {
+      exportData: 'Esporta Dati',
+      exportJobs: 'Esporta Lavori',
+      exportDocuments: 'Esporta Documenti',
+      exportAll: 'Esporta Tutto',
+      exportFormat: 'Formato di Esportazione',
+      exportSuccess: 'Dati esportati con successo',
+      exportFailed: 'Esportazione fallita',
+      exportingData: 'Esportazione in corso...',
+      selectFormat: 'Seleziona formato di esportazione',
+      includeAttachments: 'Includi allegati',
+      noDataToExport: 'Nessun dato da esportare'
     }
   }
 }

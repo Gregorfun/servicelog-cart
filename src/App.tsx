@@ -17,12 +17,13 @@ import { AdvancedSearch } from '@/components/AdvancedSearch'
 import { JobFilters } from '@/components/JobFilters'
 import { JobSorting } from '@/components/JobSorting'
 import { LanguageSelector } from '@/components/LanguageSelector'
+import { ExportDialog } from '@/components/ExportDialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Toaster } from '@/components/ui/sonner'
 import { toast } from 'sonner'
-import { Briefcase, FilePdf, MagnifyingGlass, Database, Funnel } from '@phosphor-icons/react'
+import { Briefcase, FilePdf, MagnifyingGlass, Database, Funnel, Download } from '@phosphor-icons/react'
 
 type View = 'dashboard' | 'upload' | 'search' | 'documents' | 'advanced-search'
 
@@ -38,6 +39,7 @@ function App() {
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeSearchQuery, setActiveSearchQuery] = useState('')
+  const [exportDialogOpen, setExportDialogOpen] = useState(false)
   const [jobFilters, setJobFilters] = useState<JobFilterOptions>({
     statuses: [],
     dateFrom: '',
@@ -195,6 +197,15 @@ function App() {
 
             <div className="flex items-center gap-2">
               <LanguageSelector />
+              <Button
+                variant="outline"
+                onClick={() => setExportDialogOpen(true)}
+                className="gap-2"
+                title={t.export.exportData}
+              >
+                <Download className="w-4 h-4" weight="fill" />
+                <span className="hidden lg:inline">{t.common.export}</span>
+              </Button>
               <Button
                 variant="outline"
                 onClick={handleLoadSampleData}
@@ -405,6 +416,14 @@ function App() {
           </div>
         )}
       </main>
+
+      <ExportDialog
+        open={exportDialogOpen}
+        onOpenChange={setExportDialogOpen}
+        jobs={jobs}
+        documents={documents}
+        attachments={attachments}
+      />
 
       <Toaster position="bottom-right" />
     </div>
