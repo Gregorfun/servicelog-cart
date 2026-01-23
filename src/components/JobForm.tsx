@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Job, JobStatus } from '@/lib/types'
+import { useLanguage } from '@/hooks/use-language'
 import { generateId } from '@/lib/helpers'
 import { JobTemplate } from '@/lib/job-templates'
 import { JobTemplatePicker } from '@/components/JobTemplatePicker'
@@ -20,7 +21,8 @@ interface JobFormProps {
   onDeleteCustomTemplate?: (templateId: string) => void
 }
 
-export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', customTemplates = [], onDeleteCustomTemplate }: JobFormProps) {
+export function JobForm({ onSubmit, initialData, submitLabel, customTemplates = [], onDeleteCustomTemplate }: JobFormProps) {
+  const { t } = useLanguage()
   const [showTemplatePicker, setShowTemplatePicker] = useState(false)
   const [formData, setFormData] = useState<Partial<Job>>(
     initialData || {
@@ -41,7 +43,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
       ...prev,
       ...template.data
     }))
-    toast.success('Template applied!', {
+    toast.success(t.templates.templateApplied, {
       description: `${template.name} template loaded. Fill in customer details.`
     })
   }
@@ -99,13 +101,13 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
                 className="gap-2 flex-1"
               >
                 <Files className="w-4 h-4" />
-                Use Template
+                {t.templates.useTemplate}
               </Button>
             </div>
           )}
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="title">Job Title *</Label>
+            <Label htmlFor="title">{t.jobFields.title} *</Label>
             <Input
               id="title"
               value={formData.title || ''}
@@ -117,7 +119,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="customer">Customer *</Label>
+            <Label htmlFor="customer">{t.jobFields.customer} *</Label>
             <Input
               id="customer"
               value={formData.customer || ''}
@@ -128,7 +130,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="location">Location</Label>
+            <Label htmlFor="location">{t.jobFields.location}</Label>
             <Input
               id="location"
               value={formData.location || ''}
@@ -140,7 +142,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="machineModel">Machine Model</Label>
+            <Label htmlFor="machineModel">{t.jobFields.machineModel}</Label>
             <Input
               id="machineModel"
               value={formData.machineModel || ''}
@@ -150,7 +152,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="serialNo">Serial Number</Label>
+            <Label htmlFor="serialNo">{t.jobFields.serialNo}</Label>
             <Input
               id="serialNo"
               value={formData.serialNo || ''}
@@ -162,7 +164,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="errorCode">Error Code</Label>
+          <Label htmlFor="errorCode">{t.jobFields.errorCode}</Label>
           <Input
             id="errorCode"
             value={formData.errorCode || ''}
@@ -173,7 +175,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="symptoms">Symptoms</Label>
+          <Label htmlFor="symptoms">{t.jobFields.symptoms}</Label>
           <Textarea
             id="symptoms"
             value={formData.symptoms || ''}
@@ -184,7 +186,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="fix">Fix / Solution</Label>
+          <Label htmlFor="fix">{t.jobFields.fix}</Label>
           <Textarea
             id="fix"
             value={formData.fix || ''}
@@ -195,7 +197,7 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="status">Status</Label>
+          <Label htmlFor="status">{t.jobFields.status}</Label>
           <Select
             value={formData.status || 'open'}
             onValueChange={(value) => updateField('status', value as JobStatus)}
@@ -204,17 +206,17 @@ export function JobForm({ onSubmit, initialData, submitLabel = 'Create Job', cus
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="open">Open</SelectItem>
-              <SelectItem value="in-progress">In Progress</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="cancelled">Cancelled</SelectItem>
+              <SelectItem value="open">{t.status.open}</SelectItem>
+              <SelectItem value="in-progress">{t.status.progress}</SelectItem>
+              <SelectItem value="completed">{t.status.completed}</SelectItem>
+              <SelectItem value="cancelled">{t.status.cancelled}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <Button type="submit" className="gap-2">
           {initialData ? <FloppyDisk className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-          {submitLabel}
+          {submitLabel || (initialData ? t.common.save : t.job.createJob)}
         </Button>
       </form>
     </Card>

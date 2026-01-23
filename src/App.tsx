@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useKV } from '@github/spark/hooks'
+import { useLanguage } from '@/hooks/use-language'
 import { Job, Attachment, Document } from '@/lib/types'
 import { JobTemplate } from '@/lib/job-templates'
 import { performSearch, filterJobs, JobFilterOptions, sortJobs, SortOption } from '@/lib/helpers'
@@ -15,6 +16,7 @@ import { SampleDataLoader } from '@/components/SampleDataLoader'
 import { AdvancedSearch } from '@/components/AdvancedSearch'
 import { JobFilters } from '@/components/JobFilters'
 import { JobSorting } from '@/components/JobSorting'
+import { LanguageSelector } from '@/components/LanguageSelector'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -25,6 +27,7 @@ import { Briefcase, FilePdf, MagnifyingGlass, Database, Funnel } from '@phosphor
 type View = 'dashboard' | 'upload' | 'search' | 'documents' | 'advanced-search'
 
 function App() {
+  const { t } = useLanguage()
   const [jobs = [], setJobs] = useKV<Job[]>('servicelog-jobs', [])
   const [attachments = [], setAttachments] = useKV<Attachment[]>('servicelog-attachments', [])
   const [documents = [], setDocuments] = useKV<Document[]>('servicelog-documents', [])
@@ -146,8 +149,8 @@ function App() {
     setSelectedJob(null)
     setSelectedDocument(null)
     
-    toast.success('Sample data loaded!', {
-      description: '6 jobs with 15+ attachments and 5 technical manuals added.'
+    toast.success(t.samples.samplesLoaded, {
+      description: t.samples.samplesDescription
     })
   }
 
@@ -159,7 +162,7 @@ function App() {
     setCustomTemplates((currentTemplates = []) =>
       currentTemplates.filter((t) => t.id !== templateId)
     )
-    toast.success('Template deleted')
+    toast.success(t.templates.templateDeleted)
   }
 
   return (
@@ -171,13 +174,13 @@ function App() {
               <div className="p-2 rounded-lg bg-primary">
                 <Briefcase className="w-6 h-6 text-primary-foreground" weight="fill" />
               </div>
-              <h1 className="text-2xl font-bold tracking-tight">ServiceLog</h1>
+              <h1 className="text-2xl font-bold tracking-tight">{t.app.title}</h1>
             </div>
 
             <div className="flex-1 flex items-center gap-2">
               <div className="flex-1 max-w-xl">
                 <Input
-                  placeholder="Search jobs and documents..."
+                  placeholder={t.search.searchPlaceholder}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleSearchKeyPress}
@@ -186,19 +189,20 @@ function App() {
               </div>
               <Button onClick={handleSearch} className="gap-2">
                 <MagnifyingGlass className="w-4 h-4" />
-                <span className="hidden md:inline">Search</span>
+                <span className="hidden md:inline">{t.common.search}</span>
               </Button>
             </div>
 
             <div className="flex items-center gap-2">
+              <LanguageSelector />
               <Button
                 variant="outline"
                 onClick={handleLoadSampleData}
                 className="gap-2"
-                title="Load sample jobs with attachments"
+                title={t.samples.loadSampleData}
               >
                 <Database className="w-4 h-4" weight="fill" />
-                <span className="hidden lg:inline">Samples</span>
+                <span className="hidden lg:inline">{t.navigation.samples}</span>
               </Button>
               <Button
                 variant={currentView === 'advanced-search' ? 'default' : 'outline'}
@@ -208,10 +212,10 @@ function App() {
                   setSelectedDocument(null)
                 }}
                 className="gap-2"
-                title="Advanced search by error codes and machine models"
+                title={t.navigation.advancedSearch}
               >
                 <Funnel className="w-4 h-4" />
-                <span className="hidden lg:inline">Advanced</span>
+                <span className="hidden lg:inline">{t.navigation.advanced}</span>
               </Button>
               <Button
                 variant={currentView === 'upload' ? 'default' : 'outline'}
@@ -223,7 +227,7 @@ function App() {
                 className="gap-2"
               >
                 <FilePdf className="w-4 h-4" />
-                <span className="hidden md:inline">Import PDF</span>
+                <span className="hidden md:inline">{t.navigation.importPdf}</span>
               </Button>
               <Button
                 variant={currentView === 'dashboard' ? 'default' : 'outline'}
@@ -235,7 +239,7 @@ function App() {
                 className="gap-2"
               >
                 <Briefcase className="w-4 h-4" />
-                <span className="hidden md:inline">Jobs</span>
+                <span className="hidden md:inline">{t.navigation.jobs}</span>
               </Button>
             </div>
           </div>
@@ -248,11 +252,11 @@ function App() {
             <TabsList className="mb-6">
               <TabsTrigger value="jobs" className="gap-2">
                 <Briefcase className="w-4 h-4" />
-                Jobs ({jobs.length})
+                {t.navigation.jobs} ({jobs.length})
               </TabsTrigger>
               <TabsTrigger value="documents" className="gap-2">
                 <FilePdf className="w-4 h-4" />
-                Documents ({documents.length})
+                {t.navigation.documents} ({documents.length})
               </TabsTrigger>
             </TabsList>
 
@@ -260,7 +264,7 @@ function App() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-6">
                   <div>
-                    <h2 className="text-xl font-bold mb-4">Create New Job</h2>
+                    <h2 className="text-xl font-bold mb-4">{t.job.createJob}</h2>
                     <JobForm 
                       onSubmit={handleCreateJob}
                       customTemplates={customTemplates}
@@ -270,7 +274,7 @@ function App() {
                   
                   {jobs.length === 0 && (
                     <div>
-                      <h2 className="text-xl font-bold mb-4">Quick Start</h2>
+                      <h2 className="text-xl font-bold mb-4">{t.job.quickStart}</h2>
                       <SampleDataLoader 
                         onLoadData={handleLoadSampleData}
                         hasExistingData={jobs.length > 0}
@@ -280,7 +284,7 @@ function App() {
 
                   {jobs.length > 0 && (
                     <div>
-                      <h2 className="text-xl font-bold mb-4">Filter Jobs</h2>
+                      <h2 className="text-xl font-bold mb-4">{t.job.filterJobs}</h2>
                       <JobFilters
                         filters={jobFilters}
                         onFiltersChange={setJobFilters}
@@ -295,10 +299,10 @@ function App() {
                   <div>
                     <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
                       <h2 className="text-xl font-bold">
-                        Recent Jobs
+                        {t.job.recentJobs}
                         {filteredAndSortedJobs.length !== jobs.length && (
                           <span className="text-sm text-muted-foreground font-normal ml-2">
-                            ({filteredAndSortedJobs.length} filtered)
+                            ({filteredAndSortedJobs.length} {t.job.filteredResults})
                           </span>
                         )}
                       </h2>
@@ -318,7 +322,7 @@ function App() {
 
                   {selectedJob && (
                     <div>
-                      <h2 className="text-xl font-bold mb-4">Job Details</h2>
+                      <h2 className="text-xl font-bold mb-4">{t.job.jobDetails}</h2>
                       <JobDetail
                         job={selectedJob}
                         attachments={attachments}
@@ -339,7 +343,7 @@ function App() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-6">
                   <div>
-                    <h2 className="text-xl font-bold mb-4">PDF Documents</h2>
+                    <h2 className="text-xl font-bold mb-4">{t.documents.documents}</h2>
                     <DocumentList
                       documents={documents}
                       onDelete={handleDeleteDocument}
@@ -349,7 +353,7 @@ function App() {
                   
                   {documents.length === 0 && (
                     <div>
-                      <h2 className="text-xl font-bold mb-4">Quick Start</h2>
+                      <h2 className="text-xl font-bold mb-4">{t.job.quickStart}</h2>
                       <SampleDataLoader 
                         onLoadData={handleLoadSampleData}
                         hasExistingData={jobs.length > 0}
@@ -360,7 +364,7 @@ function App() {
 
                 {selectedDocument && (
                   <div>
-                    <h2 className="text-xl font-bold mb-4">Document Viewer</h2>
+                    <h2 className="text-xl font-bold mb-4">{t.documents.documentViewer}</h2>
                     <DocumentViewer
                       document={selectedDocument}
                       onClose={() => setSelectedDocument(null)}

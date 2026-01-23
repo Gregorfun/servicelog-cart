@@ -1,7 +1,7 @@
+import { useLanguage } from '@/hooks/use-language'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Database, Check } from '@phosphor-icons/react'
-import { toast } from 'sonner'
 
 interface SampleDataLoaderProps {
   onLoadData: () => void
@@ -9,12 +9,7 @@ interface SampleDataLoaderProps {
 }
 
 export function SampleDataLoader({ onLoadData, hasExistingData }: SampleDataLoaderProps) {
-  const handleLoadSamples = () => {
-    onLoadData()
-    toast.success('Sample data loaded successfully!', {
-      description: '6 jobs with photos and PDF attachments added, plus 5 technical manuals.'
-    })
-  }
+  const { t } = useLanguage()
 
   return (
     <Card className="bg-card/50 border-accent/30">
@@ -24,9 +19,9 @@ export function SampleDataLoader({ onLoadData, hasExistingData }: SampleDataLoad
             <Database className="w-5 h-5 text-accent" weight="fill" />
           </div>
           <div>
-            <CardTitle className="text-lg">Sample Service Records</CardTitle>
+            <CardTitle className="text-lg">{t.samples.getStarted}</CardTitle>
             <CardDescription>
-              Load example jobs with photos and PDF attachments
+              {t.samples.loadSampleData}
             </CardDescription>
           </div>
         </div>
@@ -47,12 +42,12 @@ export function SampleDataLoader({ onLoadData, hasExistingData }: SampleDataLoad
           )}
         </div>
         <Button 
-          onClick={handleLoadSamples}
+          onClick={onLoadData}
           className="w-full gap-2"
           size="lg"
         >
           <Database weight="fill" />
-          Load Sample Data
+          {t.samples.loadSamples}
         </Button>
       </CardContent>
     </Card>

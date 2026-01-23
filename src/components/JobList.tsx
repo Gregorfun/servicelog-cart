@@ -1,4 +1,5 @@
 import { Job } from '@/lib/types'
+import { useLanguage } from '@/hooks/use-language'
 import { StatusBadge } from './StatusBadge'
 import { Card } from '@/components/ui/card'
 import { formatDate } from '@/lib/helpers'
@@ -11,12 +12,14 @@ interface JobListProps {
 }
 
 export function JobList({ jobs, onSelectJob, selectedJobId }: JobListProps) {
+  const { t } = useLanguage()
+
   if (jobs.length === 0) {
     return (
       <Card className="p-8 flex flex-col items-center justify-center gap-3 text-center">
         <Wrench className="w-12 h-12 text-muted-foreground" />
         <div>
-          <h3 className="text-lg font-semibold mb-1">No jobs yet</h3>
+          <h3 className="text-lg font-semibold mb-1">{t.job.noJobs}</h3>
           <p className="text-sm text-muted-foreground">Create your first service job to get started</p>
         </div>
       </Card>

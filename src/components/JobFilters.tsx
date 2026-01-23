@@ -1,4 +1,5 @@
 import { JobStatus } from '@/lib/types'
+import { useLanguage } from '@/hooks/use-language'
 import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
@@ -19,14 +20,16 @@ interface JobFiltersProps {
   filteredCount: number
 }
 
-const STATUS_OPTIONS: { value: JobStatus; label: string }[] = [
-  { value: 'open', label: 'Open' },
-  { value: 'in-progress', label: 'In Progress' },
-  { value: 'completed', label: 'Completed' },
-  { value: 'cancelled', label: 'Cancelled' },
-]
-
 export function JobFilters({ filters, onFiltersChange, totalJobs, filteredCount }: JobFiltersProps) {
+  const { t } = useLanguage()
+
+  const STATUS_OPTIONS: { value: JobStatus; label: string }[] = [
+    { value: 'open', label: t.status.open },
+    { value: 'in-progress', label: t.status.progress },
+    { value: 'completed', label: t.status.completed },
+    { value: 'cancelled', label: t.status.cancelled },
+  ]
+
   const handleStatusToggle = (status: JobStatus) => {
     const newStatuses = filters.statuses.includes(status)
       ? filters.statuses.filter((s) => s !== status)
@@ -59,10 +62,10 @@ export function JobFilters({ filters, onFiltersChange, totalJobs, filteredCount 
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Funnel className="w-5 h-5 text-muted-foreground" weight="fill" />
-          <h3 className="font-semibold">Filters</h3>
+          <h3 className="font-semibold">{t.common.filter}</h3>
           {isFiltering && (
             <Badge variant="secondary" className="ml-2">
-              {filteredCount} of {totalJobs}
+              {filteredCount} {t.filters.of} {totalJobs}
             </Badge>
           )}
         </div>
@@ -74,14 +77,14 @@ export function JobFilters({ filters, onFiltersChange, totalJobs, filteredCount 
             className="gap-2 h-8"
           >
             <X className="w-4 h-4" />
-            Clear
+            {t.filters.clearFilters}
           </Button>
         )}
       </div>
 
       <div className="flex flex-col gap-4">
         <div>
-          <Label className="text-sm font-medium mb-2 block">Status</Label>
+          <Label className="text-sm font-medium mb-2 block">{t.jobFields.status}</Label>
           <div className="flex flex-wrap gap-2">
             {STATUS_OPTIONS.map((option) => {
               const isSelected = filters.statuses.includes(option.value)
@@ -104,7 +107,7 @@ export function JobFilters({ filters, onFiltersChange, totalJobs, filteredCount 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <Label htmlFor="date-from" className="text-sm font-medium mb-2 block">
-              From Date
+              {t.filters.dateFrom}
             </Label>
             <Input
               id="date-from"
@@ -116,7 +119,7 @@ export function JobFilters({ filters, onFiltersChange, totalJobs, filteredCount 
           </div>
           <div>
             <Label htmlFor="date-to" className="text-sm font-medium mb-2 block">
-              To Date
+              {t.filters.dateTo}
             </Label>
             <Input
               id="date-to"

@@ -1,3 +1,4 @@
+import { useLanguage } from '@/hooks/use-language'
 import { Button } from '@/components/ui/button'
 import { ArrowUp, ArrowDown, ListNumbers } from '@phosphor-icons/react'
 
@@ -15,6 +16,8 @@ interface JobSortingProps {
 }
 
 export function JobSorting({ sortOption, onSortChange }: JobSortingProps) {
+  const { t } = useLanguage()
+
   const handleFieldClick = (field: SortField) => {
     if (sortOption.field === field) {
       onSortChange({
@@ -35,7 +38,7 @@ export function JobSorting({ sortOption, onSortChange }: JobSortingProps) {
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <span className="text-sm text-muted-foreground">Sort by:</span>
+      <span className="text-sm text-muted-foreground">{t.sorting.sortBy}:</span>
       <div className="flex items-center gap-1">
         <Button
           variant={isActive('status-date') ? 'default' : 'outline'}
@@ -45,7 +48,7 @@ export function JobSorting({ sortOption, onSortChange }: JobSortingProps) {
           title="Sort by status, then by date (multi-column)"
         >
           <ListNumbers className="w-3.5 h-3.5" weight="bold" />
-          Status + Date
+          {t.jobFields.status} + {t.sorting.date}
           {isActive('status-date') && <SortIcon className="w-3.5 h-3.5" weight="bold" />}
         </Button>
         <Button
@@ -54,7 +57,7 @@ export function JobSorting({ sortOption, onSortChange }: JobSortingProps) {
           onClick={() => handleFieldClick('date')}
           className="gap-1.5"
         >
-          Date
+          {t.sorting.date}
           {isActive('date') && <SortIcon className="w-3.5 h-3.5" weight="bold" />}
         </Button>
         <Button
@@ -63,7 +66,7 @@ export function JobSorting({ sortOption, onSortChange }: JobSortingProps) {
           onClick={() => handleFieldClick('customer')}
           className="gap-1.5"
         >
-          Customer
+          {t.jobFields.customer}
           {isActive('customer') && <SortIcon className="w-3.5 h-3.5" weight="bold" />}
         </Button>
         <Button
@@ -72,7 +75,7 @@ export function JobSorting({ sortOption, onSortChange }: JobSortingProps) {
           onClick={() => handleFieldClick('status')}
           className="gap-1.5"
         >
-          Status
+          {t.jobFields.status}
           {isActive('status') && <SortIcon className="w-3.5 h-3.5" weight="bold" />}
         </Button>
       </div>
