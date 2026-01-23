@@ -256,7 +256,7 @@ export function filterJobs(jobs: Job[], filters: JobFilterOptions): Job[] {
   return filtered
 }
 
-export type SortField = 'date' | 'customer' | 'status'
+export type SortField = 'date' | 'customer' | 'status' | 'status-date'
 export type SortDirection = 'asc' | 'desc'
 
 export interface SortOption {
@@ -290,6 +290,17 @@ export function sortJobs(jobs: Job[], sortOption: SortOption): Job[] {
       
       case 'status':
         comparison = STATUS_ORDER[a.status] - STATUS_ORDER[b.status]
+        break
+      
+      case 'status-date':
+        const statusComparison = STATUS_ORDER[a.status] - STATUS_ORDER[b.status]
+        if (statusComparison !== 0) {
+          comparison = statusComparison
+        } else {
+          const dateCompA = new Date(a.updatedAt).getTime()
+          const dateCompB = new Date(b.updatedAt).getTime()
+          comparison = dateCompB - dateCompA
+        }
         break
     }
     
