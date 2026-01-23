@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Job, Attachment, Document } from '@/lib/types'
-import { performSearch, filterJobs, JobFilterOptions } from '@/lib/helpers'
+import { performSearch, filterJobs, JobFilterOptions, sortJobs, SortOption } from '@/lib/helpers'
 import { createSampleJobs, createSampleAttachments, createSampleDocuments } from '@/lib/sample-data'
 import { JobForm } from '@/components/JobForm'
 import { JobList } from '@/components/JobList'
@@ -13,6 +13,7 @@ import { SearchResults } from '@/components/SearchResults'
 import { SampleDataLoader } from '@/components/SampleDataLoader'
 import { AdvancedSearch } from '@/components/AdvancedSearch'
 import { JobFilters } from '@/components/JobFilters'
+import { JobSorting } from '@/components/JobSorting'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -37,10 +38,15 @@ function App() {
     dateFrom: '',
     dateTo: '',
   })
+  const [sortOption, setSortOption] = useState<SortOption>({
+    field: 'date',
+    direction: 'desc'
+  })
 
-  const filteredJobs = useMemo(() => {
-    return filterJobs(jobs, jobFilters)
-  }, [jobs, jobFilters])
+  const filteredAndSortedJobs = useMemo(() => {
+    const filtered = filterJobs(jobs, jobFilters)
+    return sortJobs(filtered, sortOption)
+  }, [jobs, jobFilters, sortOption])
 
   const searchResults = useMemo(() => {
     if (!activeSearchQuery.trim()) return []
@@ -262,7 +268,7 @@ function App() {
                         filters={jobFilters}
                         onFiltersChange={setJobFilters}
                         totalJobs={jobs.length}
-                        filteredCount={filteredJobs.length}
+                        filteredCount={filteredAndSortedJobs.length}
                       />
                     </div>
                   )}
@@ -270,16 +276,24 @@ function App() {
 
                 <div className="flex flex-col gap-6">
                   <div>
-                    <h2 className="text-xl font-bold mb-4">
-                      Recent Jobs
-                      {filteredJobs.length !== jobs.length && (
-                        <span className="text-sm text-muted-foreground font-normal ml-2">
-                          ({filteredJobs.length} filtered)
-                        </span>
+                    <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
+                      <h2 className="text-xl font-bold">
+                        Recent Jobs
+                        {filteredAndSortedJobs.length !== jobs.length && (
+                          <span className="text-sm text-muted-foreground font-normal ml-2">
+                            ({filteredAndSortedJobs.length} filtered)
+                          </span>
+                        )}
+                      </h2>
+                      {jobs.length > 0 && (
+                        <JobSorting
+                          sortOption={sortOption}
+                          onSortChange={setSortOption}
+                        />
                       )}
-                    </h2>
+                    </div>
                     <JobList
-                      jobs={filteredJobs}
+                      jobs={filteredAndSortedJobs}
                       onSelectJob={handleSelectJob}
                       selectedJobId={selectedJob?.id}
                     />

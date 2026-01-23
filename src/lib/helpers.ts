@@ -255,3 +255,46 @@ export function filterJobs(jobs: Job[], filters: JobFilterOptions): Job[] {
 
   return filtered
 }
+
+export type SortField = 'date' | 'customer' | 'status'
+export type SortDirection = 'asc' | 'desc'
+
+export interface SortOption {
+  field: SortField
+  direction: SortDirection
+}
+
+const STATUS_ORDER: Record<JobStatus, number> = {
+  'in-progress': 0,
+  'open': 1,
+  'completed': 2,
+  'cancelled': 3
+}
+
+export function sortJobs(jobs: Job[], sortOption: SortOption): Job[] {
+  const sorted = [...jobs]
+  
+  sorted.sort((a, b) => {
+    let comparison = 0
+    
+    switch (sortOption.field) {
+      case 'date':
+        const dateA = new Date(a.updatedAt).getTime()
+        const dateB = new Date(b.updatedAt).getTime()
+        comparison = dateA - dateB
+        break
+      
+      case 'customer':
+        comparison = a.customer.localeCompare(b.customer, 'de-DE', { sensitivity: 'base' })
+        break
+      
+      case 'status':
+        comparison = STATUS_ORDER[a.status] - STATUS_ORDER[b.status]
+        break
+    }
+    
+    return sortOption.direction === 'asc' ? comparison : -comparison
+  })
+  
+  return sorted
+}

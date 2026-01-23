@@ -23,13 +23,9 @@ export function JobList({ jobs, onSelectJob, selectedJobId }: JobListProps) {
     )
   }
 
-  const sortedJobs = [...jobs].sort((a, b) => 
-    new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-  )
-
   return (
     <div className="flex flex-col gap-3">
-      {sortedJobs.map((job) => (
+      {jobs.map((job) => (
         <Card
           key={job.id}
           className={`p-4 cursor-pointer transition-all duration-200 hover:border-accent/50 hover:shadow-lg ${
