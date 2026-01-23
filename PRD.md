@@ -40,6 +40,13 @@ This is a comprehensive service management system with multiple interconnected f
 - **Progression**: Enter search term → Press Enter → Search executes across jobs and docs → Results display with snippets → Click result → Navigate to job or show document preview
 - **Success criteria**: Search matches job fields (title, error codes, symptoms, fixes) and PDF content, results show relevant snippets with highlighting, search is case-insensitive
 
+### Advanced Search (Error Codes & Machine Models)
+- **Functionality**: Specialized search interface with quick filters for error codes and machine models, showing all available codes/models as clickable badges
+- **Purpose**: Allows technicians to quickly find all jobs related to specific error codes or machine models, essential for troubleshooting recurring issues
+- **Trigger**: User clicks "Advanced" button in header navigation
+- **Progression**: Click Advanced → Choose search type (All/Error Codes/Machine Models) → See all available codes/models as badges → Click badge or type custom query → Results show with highlighted snippets → Click result → Navigate to job or document
+- **Success criteria**: Extracts all unique error codes and machine models from jobs, displays them as filterable badges, searches both jobs and documents for matches, highlights matching terms in snippets
+
 ### Status Workflow
 - **Functionality**: Track job status through states (Open, In Progress, Completed, Cancelled)
 - **Purpose**: Provides quick visual overview of work pipeline and job states
@@ -59,6 +66,8 @@ This is a comprehensive service management system with multiple interconnected f
 - **Large File Uploads**: Show progress indicator, validate file size limits (10MB max), display clear error if too large
 - **PDF Parse Failures**: Catch extraction errors, still save PDF metadata, show warning that text search won't work for this document
 - **Empty Search Results**: Display friendly "No results found" message with suggestions to try different terms
+- **Duplicate Error Codes/Models**: Same error code or machine model may appear multiple times (acceptable), badges show unique values only
+- **Missing Error Codes**: Jobs without error codes won't appear in error code filter, but will still be searchable in general search
 - **Missing Required Fields**: Inline validation prevents submission, highlight missing fields in red
 - **Concurrent Edits**: Last write wins (acceptable for single-user offline app), show timestamp of last update
 - **Storage Quota**: Monitor KV storage usage, warn user when approaching limits, provide data export option
@@ -137,13 +146,16 @@ Key animations: Status badge color transitions (200ms), search result fade-in st
   - `Briefcase` for jobs section
   - `FilePdf` for PDF documents
   - `MagnifyingGlass` for search
+  - `Funnel` for advanced search/filters
+  - `Wrench` for error codes
+  - `Barcode` for machine models/serial numbers
   - `Plus` for create actions
   - `Upload` for file uploads
   - `Pencil` for edit mode
   - `Trash` for delete actions
   - `Check` for completed status
   - `Clock` for in-progress
-  - `X` for cancelled
+  - `X` for cancelled/close actions
   - `Paperclip` for attachments
   - `Download` for file downloads
 

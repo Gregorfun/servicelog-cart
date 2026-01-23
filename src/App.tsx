@@ -11,14 +11,15 @@ import { DocumentList } from '@/components/DocumentList'
 import { DocumentViewer } from '@/components/DocumentViewer'
 import { SearchResults } from '@/components/SearchResults'
 import { SampleDataLoader } from '@/components/SampleDataLoader'
+import { AdvancedSearch } from '@/components/AdvancedSearch'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Toaster } from '@/components/ui/sonner'
 import { toast } from 'sonner'
-import { Briefcase, FilePdf, MagnifyingGlass, Database } from '@phosphor-icons/react'
+import { Briefcase, FilePdf, MagnifyingGlass, Database, Funnel } from '@phosphor-icons/react'
 
-type View = 'dashboard' | 'upload' | 'search' | 'documents'
+type View = 'dashboard' | 'upload' | 'search' | 'documents' | 'advanced-search'
 
 function App() {
   const [jobs = [], setJobs] = useKV<Job[]>('servicelog-jobs', [])
@@ -171,6 +172,19 @@ function App() {
                 <span className="hidden lg:inline">Samples</span>
               </Button>
               <Button
+                variant={currentView === 'advanced-search' ? 'default' : 'outline'}
+                onClick={() => {
+                  setCurrentView('advanced-search')
+                  setSelectedJob(null)
+                  setSelectedDocument(null)
+                }}
+                className="gap-2"
+                title="Advanced search by error codes and machine models"
+              >
+                <Funnel className="w-4 h-4" />
+                <span className="hidden lg:inline">Advanced</span>
+              </Button>
+              <Button
                 variant={currentView === 'upload' ? 'default' : 'outline'}
                 onClick={() => {
                   setCurrentView('upload')
@@ -310,6 +324,18 @@ function App() {
               query={activeSearchQuery}
               onSelectJob={handleSelectJobFromSearch}
               onSelectDocument={handleSelectDocumentFromSearch}
+            />
+          </div>
+        )}
+
+        {currentView === 'advanced-search' && (
+          <div className="max-w-5xl mx-auto">
+            <AdvancedSearch
+              jobs={jobs}
+              documents={documents}
+              onSelectJob={handleSelectJobFromSearch}
+              onSelectDocument={handleSelectDocumentFromSearch}
+              onClose={() => setCurrentView('dashboard')}
             />
           </div>
         )}
