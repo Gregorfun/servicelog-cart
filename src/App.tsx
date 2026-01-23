@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Job, Attachment, Document } from '@/lib/types'
-import { performSearch } from '@/lib/helpers'
+import { performSearch, filterJobs, JobFilterOptions } from '@/lib/helpers'
 import { createSampleJobs, createSampleAttachments, createSampleDocuments } from '@/lib/sample-data'
 import { JobForm } from '@/components/JobForm'
 import { JobList } from '@/components/JobList'
@@ -12,6 +12,7 @@ import { DocumentViewer } from '@/components/DocumentViewer'
 import { SearchResults } from '@/components/SearchResults'
 import { SampleDataLoader } from '@/components/SampleDataLoader'
 import { AdvancedSearch } from '@/components/AdvancedSearch'
+import { JobFilters } from '@/components/JobFilters'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -31,6 +32,15 @@ function App() {
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeSearchQuery, setActiveSearchQuery] = useState('')
+  const [jobFilters, setJobFilters] = useState<JobFilterOptions>({
+    statuses: [],
+    dateFrom: '',
+    dateTo: '',
+  })
+
+  const filteredJobs = useMemo(() => {
+    return filterJobs(jobs, jobFilters)
+  }, [jobs, jobFilters])
 
   const searchResults = useMemo(() => {
     if (!activeSearchQuery.trim()) return []
@@ -244,13 +254,32 @@ function App() {
                       />
                     </div>
                   )}
+
+                  {jobs.length > 0 && (
+                    <div>
+                      <h2 className="text-xl font-bold mb-4">Filter Jobs</h2>
+                      <JobFilters
+                        filters={jobFilters}
+                        onFiltersChange={setJobFilters}
+                        totalJobs={jobs.length}
+                        filteredCount={filteredJobs.length}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col gap-6">
                   <div>
-                    <h2 className="text-xl font-bold mb-4">Recent Jobs</h2>
+                    <h2 className="text-xl font-bold mb-4">
+                      Recent Jobs
+                      {filteredJobs.length !== jobs.length && (
+                        <span className="text-sm text-muted-foreground font-normal ml-2">
+                          ({filteredJobs.length} filtered)
+                        </span>
+                      )}
+                    </h2>
                     <JobList
-                      jobs={jobs}
+                      jobs={filteredJobs}
                       onSelectJob={handleSelectJob}
                       selectedJobId={selectedJob?.id}
                     />

@@ -1,4 +1,5 @@
 import { Job, Document, SearchResult } from './types'
+import type { JobStatus } from './types'
 
 export async function extractTextFromPDF(file: File): Promise<string> {
   try {
@@ -219,4 +220,38 @@ export function formatDate(dateString: string): string {
     hour: '2-digit',
     minute: '2-digit'
   }).format(date)
+}
+
+export interface JobFilterOptions {
+  statuses: JobStatus[]
+  dateFrom: string
+  dateTo: string
+}
+
+export function filterJobs(jobs: Job[], filters: JobFilterOptions): Job[] {
+  let filtered = [...jobs]
+
+  if (filters.statuses.length > 0) {
+    filtered = filtered.filter((job) => filters.statuses.includes(job.status))
+  }
+
+  if (filters.dateFrom) {
+    const fromDate = new Date(filters.dateFrom)
+    fromDate.setHours(0, 0, 0, 0)
+    filtered = filtered.filter((job) => {
+      const jobDate = new Date(job.createdAt)
+      return jobDate >= fromDate
+    })
+  }
+
+  if (filters.dateTo) {
+    const toDate = new Date(filters.dateTo)
+    toDate.setHours(23, 59, 59, 999)
+    filtered = filtered.filter((job) => {
+      const jobDate = new Date(job.createdAt)
+      return jobDate <= toDate
+    })
+  }
+
+  return filtered
 }
