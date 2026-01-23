@@ -1,4 +1,4 @@
-export type Language = 'en' | 'de'
+export type Language = 'en' | 'de' | 'fr' | 'es' | 'it'
 
 export interface Translations {
   common: {
@@ -200,6 +200,9 @@ export interface Translations {
     language: string
     english: string
     german: string
+    french: string
+    spanish: string
+    italian: string
     changeLanguage: string
   }
 }
@@ -405,6 +408,9 @@ export const translations: Record<Language, Translations> = {
       language: 'Language',
       english: 'English',
       german: 'German',
+      french: 'French',
+      spanish: 'Spanish',
+      italian: 'Italian',
       changeLanguage: 'Change Language'
     }
   },
@@ -608,7 +614,628 @@ export const translations: Record<Language, Translations> = {
       language: 'Sprache',
       english: 'Englisch',
       german: 'Deutsch',
+      french: 'Französisch',
+      spanish: 'Spanisch',
+      italian: 'Italienisch',
       changeLanguage: 'Sprache Ändern'
+    }
+  },
+  fr: {
+    common: {
+      search: 'Rechercher',
+      create: 'Créer',
+      edit: 'Modifier',
+      delete: 'Supprimer',
+      save: 'Enregistrer',
+      cancel: 'Annuler',
+      close: 'Fermer',
+      submit: 'Soumettre',
+      loading: 'Chargement',
+      error: 'Erreur',
+      success: 'Succès',
+      confirm: 'Confirmer',
+      yes: 'Oui',
+      no: 'Non',
+      filter: 'Filtrer',
+      sort: 'Trier',
+      export: 'Exporter',
+      import: 'Importer',
+      upload: 'Télécharger',
+      download: 'Télécharger',
+      view: 'Voir',
+      back: 'Retour',
+      next: 'Suivant',
+      previous: 'Précédent',
+      clear: 'Effacer',
+      apply: 'Appliquer',
+      reset: 'Réinitialiser'
+    },
+    app: {
+      title: 'ServiceLog',
+      subtitle: 'Journal de Service'
+    },
+    navigation: {
+      jobs: 'Interventions',
+      documents: 'Documents',
+      search: 'Rechercher',
+      advancedSearch: 'Recherche Avancée',
+      importPdf: 'Importer PDF',
+      samples: 'Exemples',
+      advanced: 'Avancé'
+    },
+    job: {
+      title: 'Intervention',
+      jobs: 'Interventions',
+      newJob: 'Nouvelle Intervention',
+      createJob: 'Créer une Nouvelle Intervention',
+      editJob: 'Modifier l\'Intervention',
+      deleteJob: 'Supprimer l\'Intervention',
+      jobDetails: 'Détails de l\'Intervention',
+      recentJobs: 'Interventions Récentes',
+      filterJobs: 'Filtrer les Interventions',
+      sortJobs: 'Trier les Interventions',
+      noJobs: 'Aucune intervention trouvée',
+      jobCreated: 'Intervention créée avec succès',
+      jobUpdated: 'Intervention mise à jour avec succès',
+      jobDeleted: 'Intervention supprimée avec succès',
+      confirmDelete: 'Supprimer l\'Intervention?',
+      confirmDeleteMessage: 'Cette action ne peut pas être annulée. Toutes les pièces jointes seront également supprimées.',
+      filteredResults: 'filtré',
+      quickStart: 'Démarrage Rapide'
+    },
+    jobFields: {
+      title: 'Titre',
+      customer: 'Client',
+      location: 'Localisation',
+      machineModel: 'Modèle de Machine',
+      serialNo: 'Numéro de Série',
+      errorCode: 'Code d\'Erreur',
+      symptoms: 'Symptômes',
+      fix: 'Résolution',
+      status: 'Statut',
+      createdAt: 'Créé',
+      updatedAt: 'Mis à jour'
+    },
+    status: {
+      open: 'Ouvert',
+      progress: 'En Cours',
+      completed: 'Terminé',
+      cancelled: 'Annulé',
+      all: 'Tous les Statuts'
+    },
+    attachments: {
+      attachments: 'Pièces Jointes',
+      addAttachment: 'Ajouter une Pièce Jointe',
+      deleteAttachment: 'Supprimer la Pièce Jointe',
+      noAttachments: 'Aucune pièce jointe',
+      uploadProgress: 'Téléchargement en cours...',
+      attachmentAdded: 'Pièce jointe ajoutée',
+      attachmentDeleted: 'Pièce jointe supprimée',
+      confirmDeleteAttachment: 'Supprimer cette pièce jointe?'
+    },
+    documents: {
+      documents: 'Documents',
+      document: 'Document',
+      uploadDocument: 'Télécharger un Document',
+      deleteDocument: 'Supprimer le Document',
+      noDocuments: 'Aucun document',
+      documentUploaded: 'Document téléchargé et indexé',
+      documentDeleted: 'Document supprimé',
+      documentViewer: 'Visualiseur de Documents',
+      pdfOnly: 'Fichiers PDF uniquement',
+      selectPdf: 'Sélectionner un fichier PDF',
+      enterTitle: 'Entrer le titre du document',
+      extractingText: 'Extraction du texte...',
+      indexing: 'Indexation du document...',
+      uploadSuccess: 'Téléchargement terminé',
+      uploadError: 'Échec du téléchargement'
+    },
+    search: {
+      searchPlaceholder: 'Rechercher des interventions et des documents...',
+      searchResults: 'Résultats de Recherche',
+      noResults: 'Aucun résultat trouvé',
+      noResultsMessage: 'Essayez d\'autres termes de recherche ou vérifiez vos filtres',
+      searching: 'Recherche en cours...',
+      foundIn: 'Trouvé dans',
+      errorCodes: 'Codes d\'Erreur',
+      machineModels: 'Modèles de Machines',
+      all: 'Tous',
+      customQuery: 'Requête Personnalisée',
+      availableErrorCodes: 'Codes d\'Erreur Disponibles',
+      availableMachineModels: 'Modèles de Machines Disponibles',
+      clickToSearch: 'Cliquer pour rechercher',
+      typeToSearch: 'Taper pour rechercher'
+    },
+    templates: {
+      templates: 'Modèles',
+      useTemplate: 'Utiliser le Modèle',
+      saveAsTemplate: 'Enregistrer comme Modèle',
+      customTemplates: 'Modèles Personnalisés',
+      builtInTemplates: 'Modèles Intégrés',
+      noTemplates: 'Aucun modèle personnalisé',
+      templateName: 'Nom du Modèle',
+      templateCategory: 'Catégorie',
+      selectCategory: 'Sélectionner une catégorie',
+      templateApplied: 'Modèle appliqué',
+      templateSaved: 'Modèle enregistré',
+      templateDeleted: 'Modèle supprimé',
+      confirmDeleteTemplate: 'Supprimer ce modèle?',
+      categories: {
+        hydraulic: 'Hydraulique',
+        electrical: 'Électrique',
+        mechanical: 'Mécanique',
+        pneumatic: 'Pneumatique',
+        control: 'Systèmes de Contrôle',
+        maintenance: 'Maintenance'
+      }
+    },
+    filters: {
+      filterByStatus: 'Filtrer par Statut',
+      filterByDate: 'Filtrer par Date',
+      dateFrom: 'De',
+      dateTo: 'À',
+      clearFilters: 'Réinitialiser les Filtres',
+      showingResults: 'Affichage',
+      of: 'sur',
+      results: 'résultats'
+    },
+    sorting: {
+      sortBy: 'Trier par',
+      date: 'Date',
+      customer: 'Client',
+      status: 'Statut',
+      title: 'Titre',
+      ascending: 'Croissant',
+      descending: 'Décroissant',
+      newest: 'Plus Récent',
+      oldest: 'Plus Ancien'
+    },
+    samples: {
+      loadSamples: 'Charger des Données d\'Exemple',
+      samplesLoaded: 'Données d\'exemple chargées!',
+      samplesDescription: '6 interventions avec 15+ pièces jointes et 5 manuels techniques ajoutés.',
+      loadSampleData: 'Charger des données d\'exemple pour explorer les fonctionnalités',
+      getStarted: 'Commencer',
+      exploreFeatures: 'Explorez toutes les fonctionnalités avec des données d\'exemple'
+    },
+    errors: {
+      required: 'Ce champ est obligatoire',
+      invalidEmail: 'Adresse e-mail invalide',
+      invalidDate: 'Date invalide',
+      fileSize: 'Le fichier est trop volumineux',
+      fileType: 'Type de fichier invalide',
+      uploadFailed: 'Échec du téléchargement',
+      saveFailed: 'Échec de l\'enregistrement',
+      deleteFailed: 'Échec de la suppression',
+      loadFailed: 'Échec du chargement',
+      pdfParseFailed: 'Impossible d\'extraire le texte du PDF',
+      networkError: 'Erreur réseau'
+    },
+    validation: {
+      titleRequired: 'Le titre est obligatoire',
+      customerRequired: 'Le client est obligatoire',
+      allFieldsRequired: 'Veuillez remplir tous les champs obligatoires'
+    },
+    language: {
+      language: 'Langue',
+      english: 'Anglais',
+      german: 'Allemand',
+      french: 'Français',
+      spanish: 'Espagnol',
+      italian: 'Italien',
+      changeLanguage: 'Changer de Langue'
+    }
+  },
+  es: {
+    common: {
+      search: 'Buscar',
+      create: 'Crear',
+      edit: 'Editar',
+      delete: 'Eliminar',
+      save: 'Guardar',
+      cancel: 'Cancelar',
+      close: 'Cerrar',
+      submit: 'Enviar',
+      loading: 'Cargando',
+      error: 'Error',
+      success: 'Éxito',
+      confirm: 'Confirmar',
+      yes: 'Sí',
+      no: 'No',
+      filter: 'Filtrar',
+      sort: 'Ordenar',
+      export: 'Exportar',
+      import: 'Importar',
+      upload: 'Subir',
+      download: 'Descargar',
+      view: 'Ver',
+      back: 'Atrás',
+      next: 'Siguiente',
+      previous: 'Anterior',
+      clear: 'Limpiar',
+      apply: 'Aplicar',
+      reset: 'Restablecer'
+    },
+    app: {
+      title: 'ServiceLog',
+      subtitle: 'Diario de Servicio'
+    },
+    navigation: {
+      jobs: 'Trabajos',
+      documents: 'Documentos',
+      search: 'Buscar',
+      advancedSearch: 'Búsqueda Avanzada',
+      importPdf: 'Importar PDF',
+      samples: 'Ejemplos',
+      advanced: 'Avanzado'
+    },
+    job: {
+      title: 'Trabajo',
+      jobs: 'Trabajos',
+      newJob: 'Nuevo Trabajo',
+      createJob: 'Crear Nuevo Trabajo',
+      editJob: 'Editar Trabajo',
+      deleteJob: 'Eliminar Trabajo',
+      jobDetails: 'Detalles del Trabajo',
+      recentJobs: 'Trabajos Recientes',
+      filterJobs: 'Filtrar Trabajos',
+      sortJobs: 'Ordenar Trabajos',
+      noJobs: 'No se encontraron trabajos',
+      jobCreated: 'Trabajo creado exitosamente',
+      jobUpdated: 'Trabajo actualizado exitosamente',
+      jobDeleted: 'Trabajo eliminado exitosamente',
+      confirmDelete: '¿Eliminar Trabajo?',
+      confirmDeleteMessage: 'Esta acción no se puede deshacer. Todos los archivos adjuntos también serán eliminados.',
+      filteredResults: 'filtrado',
+      quickStart: 'Inicio Rápido'
+    },
+    jobFields: {
+      title: 'Título',
+      customer: 'Cliente',
+      location: 'Ubicación',
+      machineModel: 'Modelo de Máquina',
+      serialNo: 'Número de Serie',
+      errorCode: 'Código de Error',
+      symptoms: 'Síntomas',
+      fix: 'Resolución',
+      status: 'Estado',
+      createdAt: 'Creado',
+      updatedAt: 'Actualizado'
+    },
+    status: {
+      open: 'Abierto',
+      progress: 'En Progreso',
+      completed: 'Completado',
+      cancelled: 'Cancelado',
+      all: 'Todos los Estados'
+    },
+    attachments: {
+      attachments: 'Archivos Adjuntos',
+      addAttachment: 'Agregar Archivo Adjunto',
+      deleteAttachment: 'Eliminar Archivo Adjunto',
+      noAttachments: 'Sin archivos adjuntos',
+      uploadProgress: 'Subiendo...',
+      attachmentAdded: 'Archivo adjunto agregado',
+      attachmentDeleted: 'Archivo adjunto eliminado',
+      confirmDeleteAttachment: '¿Eliminar este archivo adjunto?'
+    },
+    documents: {
+      documents: 'Documentos',
+      document: 'Documento',
+      uploadDocument: 'Subir Documento',
+      deleteDocument: 'Eliminar Documento',
+      noDocuments: 'Sin documentos',
+      documentUploaded: 'Documento subido e indexado',
+      documentDeleted: 'Documento eliminado',
+      documentViewer: 'Visor de Documentos',
+      pdfOnly: 'Solo archivos PDF',
+      selectPdf: 'Seleccionar archivo PDF',
+      enterTitle: 'Ingresar título del documento',
+      extractingText: 'Extrayendo texto...',
+      indexing: 'Indexando documento...',
+      uploadSuccess: 'Carga completada',
+      uploadError: 'Error en la carga'
+    },
+    search: {
+      searchPlaceholder: 'Buscar trabajos y documentos...',
+      searchResults: 'Resultados de Búsqueda',
+      noResults: 'No se encontraron resultados',
+      noResultsMessage: 'Pruebe con diferentes términos de búsqueda o revise sus filtros',
+      searching: 'Buscando...',
+      foundIn: 'Encontrado en',
+      errorCodes: 'Códigos de Error',
+      machineModels: 'Modelos de Máquinas',
+      all: 'Todos',
+      customQuery: 'Consulta Personalizada',
+      availableErrorCodes: 'Códigos de Error Disponibles',
+      availableMachineModels: 'Modelos de Máquinas Disponibles',
+      clickToSearch: 'Haga clic para buscar',
+      typeToSearch: 'Escriba para buscar'
+    },
+    templates: {
+      templates: 'Plantillas',
+      useTemplate: 'Usar Plantilla',
+      saveAsTemplate: 'Guardar como Plantilla',
+      customTemplates: 'Plantillas Personalizadas',
+      builtInTemplates: 'Plantillas Integradas',
+      noTemplates: 'Sin plantillas personalizadas',
+      templateName: 'Nombre de la Plantilla',
+      templateCategory: 'Categoría',
+      selectCategory: 'Seleccionar categoría',
+      templateApplied: 'Plantilla aplicada',
+      templateSaved: 'Plantilla guardada',
+      templateDeleted: 'Plantilla eliminada',
+      confirmDeleteTemplate: '¿Eliminar esta plantilla?',
+      categories: {
+        hydraulic: 'Hidráulico',
+        electrical: 'Eléctrico',
+        mechanical: 'Mecánico',
+        pneumatic: 'Neumático',
+        control: 'Sistemas de Control',
+        maintenance: 'Mantenimiento'
+      }
+    },
+    filters: {
+      filterByStatus: 'Filtrar por Estado',
+      filterByDate: 'Filtrar por Fecha',
+      dateFrom: 'Desde',
+      dateTo: 'Hasta',
+      clearFilters: 'Limpiar Filtros',
+      showingResults: 'Mostrando',
+      of: 'de',
+      results: 'resultados'
+    },
+    sorting: {
+      sortBy: 'Ordenar por',
+      date: 'Fecha',
+      customer: 'Cliente',
+      status: 'Estado',
+      title: 'Título',
+      ascending: 'Ascendente',
+      descending: 'Descendente',
+      newest: 'Más Reciente',
+      oldest: 'Más Antiguo'
+    },
+    samples: {
+      loadSamples: 'Cargar Datos de Ejemplo',
+      samplesLoaded: '¡Datos de ejemplo cargados!',
+      samplesDescription: '6 trabajos con 15+ archivos adjuntos y 5 manuales técnicos agregados.',
+      loadSampleData: 'Cargar datos de ejemplo para explorar las funciones',
+      getStarted: 'Comenzar',
+      exploreFeatures: 'Explore todas las funciones con datos de ejemplo'
+    },
+    errors: {
+      required: 'Este campo es obligatorio',
+      invalidEmail: 'Dirección de correo electrónico inválida',
+      invalidDate: 'Fecha inválida',
+      fileSize: 'El archivo es demasiado grande',
+      fileType: 'Tipo de archivo inválido',
+      uploadFailed: 'Error en la carga',
+      saveFailed: 'Error al guardar',
+      deleteFailed: 'Error al eliminar',
+      loadFailed: 'Error al cargar',
+      pdfParseFailed: 'No se pudo extraer el texto del PDF',
+      networkError: 'Error de red'
+    },
+    validation: {
+      titleRequired: 'El título es obligatorio',
+      customerRequired: 'El cliente es obligatorio',
+      allFieldsRequired: 'Por favor complete todos los campos obligatorios'
+    },
+    language: {
+      language: 'Idioma',
+      english: 'Inglés',
+      german: 'Alemán',
+      french: 'Francés',
+      spanish: 'Español',
+      italian: 'Italiano',
+      changeLanguage: 'Cambiar Idioma'
+    }
+  },
+  it: {
+    common: {
+      search: 'Cerca',
+      create: 'Crea',
+      edit: 'Modifica',
+      delete: 'Elimina',
+      save: 'Salva',
+      cancel: 'Annulla',
+      close: 'Chiudi',
+      submit: 'Invia',
+      loading: 'Caricamento',
+      error: 'Errore',
+      success: 'Successo',
+      confirm: 'Conferma',
+      yes: 'Sì',
+      no: 'No',
+      filter: 'Filtra',
+      sort: 'Ordina',
+      export: 'Esporta',
+      import: 'Importa',
+      upload: 'Carica',
+      download: 'Scarica',
+      view: 'Visualizza',
+      back: 'Indietro',
+      next: 'Successivo',
+      previous: 'Precedente',
+      clear: 'Cancella',
+      apply: 'Applica',
+      reset: 'Reimposta'
+    },
+    app: {
+      title: 'ServiceLog',
+      subtitle: 'Registro di Servizio'
+    },
+    navigation: {
+      jobs: 'Lavori',
+      documents: 'Documenti',
+      search: 'Cerca',
+      advancedSearch: 'Ricerca Avanzata',
+      importPdf: 'Importa PDF',
+      samples: 'Esempi',
+      advanced: 'Avanzato'
+    },
+    job: {
+      title: 'Lavoro',
+      jobs: 'Lavori',
+      newJob: 'Nuovo Lavoro',
+      createJob: 'Crea Nuovo Lavoro',
+      editJob: 'Modifica Lavoro',
+      deleteJob: 'Elimina Lavoro',
+      jobDetails: 'Dettagli del Lavoro',
+      recentJobs: 'Lavori Recenti',
+      filterJobs: 'Filtra Lavori',
+      sortJobs: 'Ordina Lavori',
+      noJobs: 'Nessun lavoro trovato',
+      jobCreated: 'Lavoro creato con successo',
+      jobUpdated: 'Lavoro aggiornato con successo',
+      jobDeleted: 'Lavoro eliminato con successo',
+      confirmDelete: 'Eliminare il Lavoro?',
+      confirmDeleteMessage: 'Questa azione non può essere annullata. Tutti gli allegati verranno eliminati.',
+      filteredResults: 'filtrato',
+      quickStart: 'Avvio Rapido'
+    },
+    jobFields: {
+      title: 'Titolo',
+      customer: 'Cliente',
+      location: 'Posizione',
+      machineModel: 'Modello di Macchina',
+      serialNo: 'Numero di Serie',
+      errorCode: 'Codice Errore',
+      symptoms: 'Sintomi',
+      fix: 'Risoluzione',
+      status: 'Stato',
+      createdAt: 'Creato',
+      updatedAt: 'Aggiornato'
+    },
+    status: {
+      open: 'Aperto',
+      progress: 'In Corso',
+      completed: 'Completato',
+      cancelled: 'Annullato',
+      all: 'Tutti gli Stati'
+    },
+    attachments: {
+      attachments: 'Allegati',
+      addAttachment: 'Aggiungi Allegato',
+      deleteAttachment: 'Elimina Allegato',
+      noAttachments: 'Nessun allegato',
+      uploadProgress: 'Caricamento in corso...',
+      attachmentAdded: 'Allegato aggiunto',
+      attachmentDeleted: 'Allegato eliminato',
+      confirmDeleteAttachment: 'Eliminare questo allegato?'
+    },
+    documents: {
+      documents: 'Documenti',
+      document: 'Documento',
+      uploadDocument: 'Carica Documento',
+      deleteDocument: 'Elimina Documento',
+      noDocuments: 'Nessun documento',
+      documentUploaded: 'Documento caricato e indicizzato',
+      documentDeleted: 'Documento eliminato',
+      documentViewer: 'Visualizzatore Documenti',
+      pdfOnly: 'Solo file PDF',
+      selectPdf: 'Seleziona file PDF',
+      enterTitle: 'Inserisci il titolo del documento',
+      extractingText: 'Estrazione testo...',
+      indexing: 'Indicizzazione documento...',
+      uploadSuccess: 'Caricamento completato',
+      uploadError: 'Caricamento fallito'
+    },
+    search: {
+      searchPlaceholder: 'Cerca lavori e documenti...',
+      searchResults: 'Risultati di Ricerca',
+      noResults: 'Nessun risultato trovato',
+      noResultsMessage: 'Prova con termini di ricerca diversi o controlla i filtri',
+      searching: 'Ricerca in corso...',
+      foundIn: 'Trovato in',
+      errorCodes: 'Codici Errore',
+      machineModels: 'Modelli di Macchine',
+      all: 'Tutti',
+      customQuery: 'Query Personalizzata',
+      availableErrorCodes: 'Codici Errore Disponibili',
+      availableMachineModels: 'Modelli di Macchine Disponibili',
+      clickToSearch: 'Clicca per cercare',
+      typeToSearch: 'Digita per cercare'
+    },
+    templates: {
+      templates: 'Modelli',
+      useTemplate: 'Usa Modello',
+      saveAsTemplate: 'Salva come Modello',
+      customTemplates: 'Modelli Personalizzati',
+      builtInTemplates: 'Modelli Integrati',
+      noTemplates: 'Nessun modello personalizzato',
+      templateName: 'Nome Modello',
+      templateCategory: 'Categoria',
+      selectCategory: 'Seleziona categoria',
+      templateApplied: 'Modello applicato',
+      templateSaved: 'Modello salvato',
+      templateDeleted: 'Modello eliminato',
+      confirmDeleteTemplate: 'Eliminare questo modello?',
+      categories: {
+        hydraulic: 'Idraulico',
+        electrical: 'Elettrico',
+        mechanical: 'Meccanico',
+        pneumatic: 'Pneumatico',
+        control: 'Sistemi di Controllo',
+        maintenance: 'Manutenzione'
+      }
+    },
+    filters: {
+      filterByStatus: 'Filtra per Stato',
+      filterByDate: 'Filtra per Data',
+      dateFrom: 'Da',
+      dateTo: 'A',
+      clearFilters: 'Cancella Filtri',
+      showingResults: 'Mostrando',
+      of: 'di',
+      results: 'risultati'
+    },
+    sorting: {
+      sortBy: 'Ordina per',
+      date: 'Data',
+      customer: 'Cliente',
+      status: 'Stato',
+      title: 'Titolo',
+      ascending: 'Crescente',
+      descending: 'Decrescente',
+      newest: 'Più Recente',
+      oldest: 'Più Vecchio'
+    },
+    samples: {
+      loadSamples: 'Carica Dati di Esempio',
+      samplesLoaded: 'Dati di esempio caricati!',
+      samplesDescription: '6 lavori con 15+ allegati e 5 manuali tecnici aggiunti.',
+      loadSampleData: 'Carica dati di esempio per esplorare le funzionalità',
+      getStarted: 'Inizia',
+      exploreFeatures: 'Esplora tutte le funzionalità con dati di esempio'
+    },
+    errors: {
+      required: 'Questo campo è obbligatorio',
+      invalidEmail: 'Indirizzo email non valido',
+      invalidDate: 'Data non valida',
+      fileSize: 'Il file è troppo grande',
+      fileType: 'Tipo di file non valido',
+      uploadFailed: 'Caricamento fallito',
+      saveFailed: 'Salvataggio fallito',
+      deleteFailed: 'Eliminazione fallita',
+      loadFailed: 'Caricamento fallito',
+      pdfParseFailed: 'Impossibile estrarre il testo dal PDF',
+      networkError: 'Errore di rete'
+    },
+    validation: {
+      titleRequired: 'Il titolo è obbligatorio',
+      customerRequired: 'Il cliente è obbligatorio',
+      allFieldsRequired: 'Si prega di compilare tutti i campi obbligatori'
+    },
+    language: {
+      language: 'Lingua',
+      english: 'Inglese',
+      german: 'Tedesco',
+      french: 'Francese',
+      spanish: 'Spagnolo',
+      italian: 'Italiano',
+      changeLanguage: 'Cambia Lingua'
     }
   }
 }
