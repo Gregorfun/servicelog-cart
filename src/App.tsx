@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Job, Attachment, Document } from '@/lib/types'
 import { performSearch } from '@/lib/helpers'
+import { createSampleJobs, createSampleAttachments, createSampleDocuments } from '@/lib/sample-data'
 import { JobForm } from '@/components/JobForm'
 import { JobList } from '@/components/JobList'
 import { JobDetail } from '@/components/JobDetail'
@@ -9,11 +10,13 @@ import { DocumentUpload } from '@/components/DocumentUpload'
 import { DocumentList } from '@/components/DocumentList'
 import { DocumentViewer } from '@/components/DocumentViewer'
 import { SearchResults } from '@/components/SearchResults'
+import { SampleDataLoader } from '@/components/SampleDataLoader'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Toaster } from '@/components/ui/sonner'
-import { Briefcase, FilePdf, MagnifyingGlass } from '@phosphor-icons/react'
+import { toast } from 'sonner'
+import { Briefcase, FilePdf, MagnifyingGlass, Database } from '@phosphor-icons/react'
 
 type View = 'dashboard' | 'upload' | 'search' | 'documents'
 
@@ -111,6 +114,24 @@ function App() {
     }
   }
 
+  const handleLoadSampleData = () => {
+    const sampleJobs = createSampleJobs()
+    const sampleAttachments = createSampleAttachments(sampleJobs)
+    const sampleDocs = createSampleDocuments()
+    
+    setJobs((currentJobs = []) => [...currentJobs, ...sampleJobs])
+    setAttachments((currentAttachments = []) => [...currentAttachments, ...sampleAttachments])
+    setDocuments((currentDocs = []) => [...currentDocs, ...sampleDocs])
+    
+    setCurrentView('dashboard')
+    setSelectedJob(null)
+    setSelectedDocument(null)
+    
+    toast.success('Sample data loaded!', {
+      description: '6 jobs with 15+ attachments and 5 technical manuals added.'
+    })
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -140,6 +161,15 @@ function App() {
             </div>
 
             <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={handleLoadSampleData}
+                className="gap-2"
+                title="Load sample jobs with attachments"
+              >
+                <Database className="w-4 h-4" weight="fill" />
+                <span className="hidden lg:inline">Samples</span>
+              </Button>
               <Button
                 variant={currentView === 'upload' ? 'default' : 'outline'}
                 onClick={() => {
@@ -190,6 +220,16 @@ function App() {
                     <h2 className="text-xl font-bold mb-4">Create New Job</h2>
                     <JobForm onSubmit={handleCreateJob} />
                   </div>
+                  
+                  {jobs.length === 0 && (
+                    <div>
+                      <h2 className="text-xl font-bold mb-4">Quick Start</h2>
+                      <SampleDataLoader 
+                        onLoadData={handleLoadSampleData}
+                        hasExistingData={jobs.length > 0}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col gap-6">
@@ -222,13 +262,25 @@ function App() {
 
             <TabsContent value="documents">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                  <h2 className="text-xl font-bold mb-4">PDF Documents</h2>
-                  <DocumentList
-                    documents={documents}
-                    onDelete={handleDeleteDocument}
-                    onSelect={(doc) => setSelectedDocument(doc)}
-                  />
+                <div className="flex flex-col gap-6">
+                  <div>
+                    <h2 className="text-xl font-bold mb-4">PDF Documents</h2>
+                    <DocumentList
+                      documents={documents}
+                      onDelete={handleDeleteDocument}
+                      onSelect={(doc) => setSelectedDocument(doc)}
+                    />
+                  </div>
+                  
+                  {documents.length === 0 && (
+                    <div>
+                      <h2 className="text-xl font-bold mb-4">Quick Start</h2>
+                      <SampleDataLoader 
+                        onLoadData={handleLoadSampleData}
+                        hasExistingData={jobs.length > 0}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {selectedDocument && (

@@ -47,6 +47,13 @@ This is a comprehensive service management system with multiple interconnected f
 - **Progression**: Select status → Visual indicator updates → Status persists → Job list shows status badges
 - **Success criteria**: Status changes reflect immediately, visual indicators are clear and color-coded
 
+### Sample Data Loading
+- **Functionality**: Load realistic sample service jobs with photos and PDF attachments to demonstrate the application
+- **Purpose**: Allows new users to immediately explore the full functionality without manually creating data
+- **Trigger**: User clicks "Samples" button in header or "Load Sample Data" card when no data exists
+- **Progression**: Click Samples → Sample data generates → Toast notification confirms success → Jobs and documents appear in lists
+- **Success criteria**: 6 realistic jobs added with 15+ attachments (photos and PDFs), 5 technical manual PDFs, all searchable and fully interactive
+
 ## Edge Case Handling
 
 - **Large File Uploads**: Show progress indicator, validate file size limits (10MB max), display clear error if too large
