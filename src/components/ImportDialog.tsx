@@ -64,11 +64,6 @@ export function ImportDialog({
     
     try {
       onImport(previewResult)
-      toast.success(t.import.importSuccess, {
-        description: t.import.importSuccessDescription
-          .replace('{jobs}', String(previewResult.jobs.length))
-          .replace('{documents}', String(previewResult.documents.length))
-      })
       handleClose()
     } catch (error) {
       toast.error(t.import.importFailed, {
