@@ -5,6 +5,7 @@ import { Job, Attachment, Document } from '@/lib/types'
 import { JobTemplate } from '@/lib/job-templates'
 import { performSearch, filterJobs, JobFilterOptions, sortJobs, SortOption } from '@/lib/helpers'
 import { createSampleJobs, createSampleAttachments, createSampleDocuments } from '@/lib/sample-data'
+import { mergeImportedData, MergeDataResult } from '@/lib/import'
 import { JobForm } from '@/components/JobForm'
 import { JobList } from '@/components/JobList'
 import { JobDetail } from '@/components/JobDetail'
@@ -170,9 +171,46 @@ function App() {
   }
 
   const handleImport = (result: { jobs: Job[], documents: Document[], attachments: Attachment[] }) => {
-    setJobs((currentJobs = []) => [...currentJobs, ...result.jobs])
-    setDocuments((currentDocs = []) => [...currentDocs, ...result.documents])
-    setAttachments((currentAttachments = []) => [...currentAttachments, ...result.attachments])
+    let mergeResult: MergeDataResult | null = null
+
+    setJobs((currentJobs = []) => {
+      mergeResult = mergeImportedData(
+        {
+          jobs: currentJobs,
+          documents,
+          attachments,
+        },
+        result
+      )
+
+      return mergeResult.jobs
+    })
+
+    if (!mergeResult) {
+      return
+    }
+
+    setDocuments(mergeResult.documents)
+    setAttachments(mergeResult.attachments)
+
+    const inserted =
+      mergeResult.stats.jobs.inserted +
+      mergeResult.stats.documents.inserted +
+      mergeResult.stats.attachments.inserted
+
+    const updated =
+      mergeResult.stats.jobs.updated +
+      mergeResult.stats.documents.updated +
+      mergeResult.stats.attachments.updated
+
+    const skipped =
+      mergeResult.stats.jobs.skipped +
+      mergeResult.stats.documents.skipped +
+      mergeResult.stats.attachments.skipped
+
+    toast.success(t.import.importSuccess, {
+      description: `${inserted} new, ${updated} updated, ${skipped} skipped`
+    })
   }
 
   return (
